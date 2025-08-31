@@ -1,6 +1,6 @@
 <script lang="ts">
   import { socketService } from '../socketService';
-  import { roomId, gameState } from '../store';
+  import { roomId, gameState , mySecretWord } from '../store';
     import { words } from '../utils'; // <--- IMPORT YOUR WORDS UTILITY
 
   
@@ -21,6 +21,7 @@
       validationError = 'Word not found in dictionary.';
       return;
     }
+    mySecretWord.set(word);
     socketService.setWord($roomId, word);
     wordSubmitted = true;
   }

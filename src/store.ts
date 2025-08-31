@@ -8,6 +8,7 @@ export const wordToGuess = writable<string>('');
 export const opponentGuesses = writable<any[]>([]); // Array of guess arrays
 export const winnerId = writable<string | null>(null);
 export const errorMessage = writable<string | null>(null);
+export const mySecretWord = writable<string>('');
 
 // Add this new store
 export const activePlayerId = writable<string | null>(null);
