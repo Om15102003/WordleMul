@@ -179,19 +179,27 @@ socketService.on('guessProcessed', (data) => {
         <h2>You Lost.</h2>
       {/if}
 
-      {#if $gameOverDetails?.reason === 'tiebreaker'}
-        <div class="tiebreaker-details">
-          <p><strong>Won by Tie-Breaker!</strong></p>
-          <p>
-            Your Time: 
-            <strong>{formatTime($gameOverDetails.details.times[socketService.playerId])}s</strong>
-          </p>
-          <p>
-            Opponent's Time: 
-            <strong>{formatTime($gameOverDetails.details.times[Object.keys($gameOverDetails.details.times).find(id => id !== socketService.playerId)])}s</strong>
-          </p>
-        </div>
-      {/if}
+{#if $gameOverDetails?.reason === 'tiebreaker'}
+    <div class="tiebreaker-details">
+      <p>
+        <strong>
+          {#if $winnerId === socketService.playerId}
+            Won by Tie-Breaker!
+          {:else}
+            Lost by Tie-Breaker!
+          {/if}
+        </strong>
+      </p>
+      <p>
+        Your Time: 
+        <strong>{formatTime($gameOverDetails.details.times[socketService.playerId])}s</strong>
+      </p>
+      <p>
+        Opponent's Time: 
+        <strong>{formatTime($gameOverDetails.details.times[Object.keys($gameOverDetails.details.times).find(id => id !== socketService.playerId)])}s</strong>
+      </p>
+    </div>
+  {/if}
 
       <button on:click={() => window.location.reload()}>Play Again</button>
     </div>
