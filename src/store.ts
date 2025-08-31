@@ -11,3 +11,4 @@ export const errorMessage = writable<string | null>(null);
 
 // Add this new store
 export const activePlayerId = writable<string | null>(null);
+export const gameOverDetails = writable<any>(null);

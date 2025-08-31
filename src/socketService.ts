@@ -41,6 +41,8 @@ class SocketService extends EventEmitter {
     this.socket.on('error', (data) => this.emit('error', data));
     this.socket.on('opponentLeft', () => this.emit('opponentLeft', null));
     this.socket.on('turnChange', (data) => this.emit('turnChange', data));
+    this.socket.on('guessProcessed', (data) => this.emit('guessProcessed', data));
+    this.socket.on('finalChance', (data) => this.emit('finalChance', data));
 
   }
   
@@ -59,9 +61,9 @@ class SocketService extends EventEmitter {
     this.socket.emit('setWord', { roomId, word });
   }
 
-  makeGuess(roomId: string, guess: any[]) { // 'guess' should be an array of tile objects
-    this.socket.emit('makeGuess', { roomId, guess });
-  }
+  public makeGuess(roomId: string, guessWord: string) {
+  this.socket.emit('makeGuess', { roomId, guessWord });
+}
 }
 
 // Export a singleton instance
