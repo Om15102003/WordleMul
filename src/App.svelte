@@ -172,23 +172,7 @@ socketService.on('guessProcessed', (data) => {
           </div>
         {/if}
 
-        {#if $gameState === 'gameOver'}
-            <div class="game-over-summary">
-                {#if $winnerId === socketService.playerId}
-                    <h2>🎉 You Won! 🎉</h2>
-                {:else}
-                    <h2>You Lost.</h2>
-                {/if}
-                {#if $gameOverDetails?.reason === 'tiebreaker'}
-                    <div class="tiebreaker-details">
-                        <p><strong>{$winnerId === socketService.playerId ? 'Won by Tie-Breaker!' : 'Lost by Tie-Breaker!'}</strong></p>
-                        <p>Your Time: <strong>{formatTime($gameOverDetails.details.times[socketService.playerId])}s</strong></p>
-                        <p>Opponent's Time: <strong>{formatTime($gameOverDetails.details.times[Object.keys($gameOverDetails.details.times).find(id => id !== socketService.playerId)])}s</strong></p>
-                    </div>
-                {/if}
-                <button class="play-again" on:click={() => window.location.reload()}>Play Again</button>
-            </div>
-        {/if}
+        
         
         <div class="board-wrapper">
             <Board words={boardWords} states={boardStates} />
