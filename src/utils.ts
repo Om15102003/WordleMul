@@ -461,3 +461,31 @@ export function timeRemaining(m: Mode) {
 export function failed(s: GameState) {
 	return !(s.active || (s.guesses > 0 && s.board.state[s.guesses - 1].join("") === "🟩".repeat(COLS)));
 }
+
+// Add this new function to the end of your src/utils.ts file
+
+export function evaluateGuess(guess: string, targetWord: string): LetterState[] {
+	const target = targetWord.split("");
+	const result = Array<LetterState>(COLS).fill("⬛");
+
+	// Find correct letters (🟩)
+	for (let i = 0; i < COLS; i++) {
+		if (guess[i] === target[i]) {
+			result[i] = "🟩";
+			target[i] = null; // Mark as used
+		}
+	}
+
+	// Find present letters (🟨)
+	for (let i = 0; i < COLS; i++) {
+		if (result[i] !== "🟩") {
+			const charIndex = target.indexOf(guess[i]);
+			if (charIndex !== -1) {
+				result[i] = "🟨";
+				target[charIndex] = null; // Mark as used
+			}
+		}
+	}
+
+	return result;
+}
