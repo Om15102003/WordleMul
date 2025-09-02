@@ -16,8 +16,23 @@ const io = new Server(server, {
   transports: ['websocket', 'polling']
 });
 
-// Serve static files from the built frontend
+// Add basic error handling middleware
+app.use((err, req, res, next) => {
+  console.error('Error:', err);
+  res.status(500).send('Something broke!');
+});
+
+// Serve static files from the built frontend (after Socket.IO setup)
 app.use(express.static(path.join(__dirname, '../dist')));
+
+// Health check endpoint for Render
+app.get('/health', (req, res) => {
+  res.status(200).json({ 
+    status: 'OK', 
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'development'
+  });
+});
 
 // Serve the main app for all routes (SPA routing)
 app.get('*', (req, res) => {
