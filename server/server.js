@@ -6,8 +6,14 @@ const wordList = require('./words_5.ts');
 
 const app = express();
 const server = http.createServer(app);
+
+// Production-ready Socket.IO configuration
 const io = new Server(server, {
-  cors: { origin: "*", methods: ["GET", "POST"] }
+  cors: { 
+    origin: process.env.NODE_ENV === 'production' ? false : "*", 
+    methods: ["GET", "POST"] 
+  },
+  transports: ['websocket', 'polling']
 });
 
 // Serve static files from the built frontend
@@ -207,4 +213,9 @@ io.on('connection', (socket) => {
 });
 
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const HOST = process.env.HOST || '0.0.0.0';
+
+server.listen(PORT, HOST, () => {
+  console.log(`🚀 Server running on ${HOST}:${PORT}`);
+  console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
+});
