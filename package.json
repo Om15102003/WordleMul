@@ -5,11 +5,14 @@
   "type": "module",
   "private": "true",
   "license": "GPL-3.0",
+  "main": "server/server.js",
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview",
-    "check": "svelte-check --tsconfig ./tsconfig.json"
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "start": "node server/server.js",
+    "postinstall": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -33,6 +36,8 @@
     "vite": "^4.0.4"
   },
   "dependencies": {
-    "socket.io-client": "^4.8.1"
+    "socket.io-client": "^4.8.1",
+    "express": "^4.18.2",
+    "socket.io": "^4.7.2"
   }
 }
